@@ -22,17 +22,19 @@ router.post("/", authenticated, async (req, res) => {
   res.send({ data: newAccount });
 });
 
-router.patch("/:id", async (req, res) => {
+router.patch("/:id", authenticated, async (req, res) => {
   const updatedAccount = await editAccount(req.params.id, {
     title: req.body.title,
     currency: req.body.currency,
   });
+
+  res.send({ data: updatedAccount });
 });
 
 router.delete("/:id", authenticated, async (req, res) => {
   await deleteAccount(req.user.id, req.params.id);
 
-  res.send({ error: null })
+  res.send({ error: null });
 });
 
 module.exports = router;

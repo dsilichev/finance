@@ -24,6 +24,8 @@ async function editAccount(id, account) {
   const newAccount = await Account.findByIdAndUpdate(id, account, {
     returnDocument: "after",
   });
+
+  return newAccount;
 }
 
 //get Accounts
