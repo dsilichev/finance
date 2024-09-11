@@ -1,17 +1,21 @@
 const Account = require("../models/Account");
+const User = require("../models/User");
 
 // add
 
-async function addAccount(account) {
+async function addAccount(userId, account) {
   const newAccount = await Account.create(account);
+
+  await User.findByIdAndUpdate(userId, { $push: { accounts: newAccount } });
 
   return newAccount;
 }
 
 //delete
 
-async function deleteAccount(id) {
-  return Account.deleteOne({ _id: id });
+async function deleteAccount(userId, accountId) {
+  await Account.deleteOne({ _id: accountId });
+  await User.findByIdAndUpdate(userId, { $pull: { accounts: accountId } });
 }
 
 //edit
@@ -30,10 +34,10 @@ async function getAccounts(userId) {
 //get Account
 async function getAccount(id) {
   return Account.findById(id);
-} 
+}
 
 module.exports = {
   addAccount,
   deleteAccount,
-  editAccount
-}
+  editAccount,
+};

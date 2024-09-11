@@ -4,6 +4,7 @@ const {
   deleteAccount,
   editAccount,
 } = require("../controllers/account");
+const authenticated = require("../middlewares/authenticated");
 
 const router = express.Router({ mergeParams: true });
 
@@ -11,12 +12,14 @@ const router = express.Router({ mergeParams: true });
 
 //router.get("/:id", async (req, res) => {});
 
-router.post("/", async (req, res) => {
-  await addAccount({
+router.post("/", authenticated, async (req, res) => {
+  const newAccount = await addAccount(req.user.id, {
     owner: req.user.id,
     title: req.body.title,
     currency: req.body.currency,
   });
+
+  res.send({ data: newAccount });
 });
 
 router.patch("/:id", async (req, res) => {
@@ -26,8 +29,10 @@ router.patch("/:id", async (req, res) => {
   });
 });
 
-router.delete("/:id", async (req, res) => {
-  await deleteAccount(req.params.id);
+router.delete("/:id", authenticated, async (req, res) => {
+  await deleteAccount(req.user.id, req.params.id);
+
+  res.send({ error: null })
 });
 
 module.exports = router;
