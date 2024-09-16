@@ -11,6 +11,9 @@ const AccountSchema = mongoose.Schema(
       type: String,
       default: currency.RUB,
     },
+    type: {
+      type: String,
+    },
     balance: {
       type: mongoose.Schema.Types.Decimal128,
       default: 0,

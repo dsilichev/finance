@@ -17,6 +17,7 @@ router.post("/", authenticated, async (req, res) => {
     owner: req.user.id,
     title: req.body.title,
     currency: req.body.currency,
+    type: req.body.type,
   });
 
   res.send({ data: newAccount });
