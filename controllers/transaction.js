@@ -17,8 +17,8 @@ async function deleteTransaction(transactionId) {
 
 //edit
 
-async function editTransaction(id, tranaction) {
-  const newAccount = await Transaction.findByIdAndUpdate(id, transaction, {
+async function editTransaction(id, transaction) {
+  const newTransaction = await Transaction.findByIdAndUpdate(id, transaction, {
     returnDocument: "after",
   });
 
@@ -27,6 +27,7 @@ async function editTransaction(id, tranaction) {
 
 //get Transactions
 async function getTransactions(account, limit = 10, page = 1) {
+  console.log(account ? { account: account } : null);
   const [transactions, count] = await Promise.all([
     Transaction.find(account ? { account: account } : null)
       .limit(limit)
