@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import { PrivateContent, H2 } from '../../components';
 import { UserRow, TableRow } from './components';
-import { useServerRequest } from '../../hooks';
 import { useEffect, useState } from 'react';
 import { ROLE } from '../../constants';
 import { checkAccess, request } from '../../utils';
@@ -12,7 +11,6 @@ const UsersContainer = ({ className }) => {
   const [users, setUsers] = useState([]);
   const [roles, setRoles] = useState([]);
   const [errorMessage, setErrorMessage] = useState(null);
-  const requestServer = useServerRequest();
   const [shouldUpdateUserList, setShouldUpdateUserList] = useState(false);
   const userRole = useSelector(selectUserRole);
 

@@ -6,11 +6,11 @@ import { debounce } from './utils';
 import { request } from '../../utils';
 
 const MainContainer = ({ className }) => {
-  const [posts, setPosts] = useState([]);
-  const [page, setPage] = useState(1);
-  const [lastPage, setLastPage] = useState(1);
-  const [searchPhrase, setSearchPhrase] = useState('');
-  const [shouldSearch, setShouldSearch] = useState(false);
+  // const [posts, setPosts] = useState([]);
+  // const [page, setPage] = useState(1);
+  // const [lastPage, setLastPage] = useState(1);
+  // const [searchPhrase, setSearchPhrase] = useState('');
+  // const [shouldSearch, setShouldSearch] = useState(false);
 
 
   useEffect(() => {
