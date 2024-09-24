@@ -6,10 +6,10 @@ const HeaderContainer = ({ className }) => {
     <div className={className}>
       <div className="page-link-wrap">
         <Link to="/">Главная</Link>
-        <Link to="/">История</Link>
+        <Link to="/history">История</Link>
       </div>
       <div className="user-link-wrap">
-        <div>Username</div>
+        <Link to="/login">Войти</Link>
         <i class="fas fa-user-circle"></i>
       </div>
     </div>

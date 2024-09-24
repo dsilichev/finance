@@ -1,6 +1,6 @@
 import { Routes, Route } from 'react-router-dom';
-import { Header } from './components';
-import { Main } from './pages';
+import { Footer, Header } from './components';
+import { History, Main } from './pages';
 import styled from 'styled-components';
 // import { useLayoutEffect } from 'react';
 // import { useDispatch } from 'react-redux';
@@ -49,6 +49,7 @@ export const Finance = () => {
         <Page>
           <Routes>
             <Route path="/" element={<Main />} />
+            <Route path="/history" element={<History />} />
             {/* <Route path="/login" element={<Authorization />} />
             <Route path="/register" element={<Registration />} />
             <Route path="/users" element={<Users />} />
@@ -59,7 +60,7 @@ export const Finance = () => {
             {/* <Route path="*" element={<Error error={ERROR.PAGE_NOT_EXIST} />} /> */}
           </Routes>
         </Page>
-        {/* <Footer /> */}
+        <Footer />
         {/* <Modal /> */}
       </AppColumn>
     </>
