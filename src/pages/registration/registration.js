@@ -2,23 +2,21 @@ import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useState } from 'react';
-import { Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { AuthFormError, Input, Button, H2 } from '../../components';
 import { setUser } from '../../actions';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectUserRole } from '../../selectors';
-import { ROLE } from '../../constants';
+// import { selectUserRole } from '../../selectors';
+// import { ROLE } from '../../constants';
 import { useResetForm } from '../../hooks';
 import { request } from '../../utils';
 
 const regFormSchema = yup.object().shape({
-  login: yup
+  email: yup
     .string()
-    .required('Заполните логин')
-    .matches(/^\w+$/, 'Неверно заполнен логин')
-    .min(3, 'Неверно заполнен логин. Минимум 3 символа')
-    .max(15, 'Неверно заполнен логин. Максимум 15 симвовлов'),
+    .required('Заполните Email')
+    .email('Неверно заполнен Email'),
   password: yup
     .string()
     .required('Заполните пароль')
@@ -39,7 +37,7 @@ export const RegistrationContainer = ({ className }) => {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      login: '',
+      email: '',
       password: '',
       passcheck: '',
     },
@@ -49,13 +47,14 @@ export const RegistrationContainer = ({ className }) => {
   const [serverError, setServerError] = useState(null);
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const roleId = useSelector(selectUserRole);
+  // const roleId = useSelector(selectUserRole);
 
   useResetForm(reset);
 
-  const onSubmit = ({ login, password }) => {
-    request('/api/register', 'POST', { login, password }).then(({ error, user }) => {
+  const onSubmit = ({ email, password }) => {
+    request('http://localhost:3000/api/register', 'POST', { email, password }).then(({ error, user }) => {
       if (error) {
         setServerError(`Ошибка запроса: ${error}`);
         return;
@@ -63,16 +62,17 @@ export const RegistrationContainer = ({ className }) => {
 
       dispatch(setUser(user));
       sessionStorage.setItem('userData', JSON.stringify(user));
+      navigate('/');
     });
   };
 
   const formError =
-    errors?.login?.message || errors?.password?.message || errors?.passcheck?.message;
+    errors?.email?.message || errors?.password?.message || errors?.passcheck?.message;
   const errorMessage = formError || serverError;
 
-  if (roleId !== ROLE.GUEST) {
-    return <Navigate to="/" />;
-  }
+  // if (roleId !== ROLE.GUEST) {
+  //   return <Navigate to="/" />;
+  // }
 
   return (
     <div className={className}>
@@ -80,8 +80,8 @@ export const RegistrationContainer = ({ className }) => {
       <form onSubmit={handleSubmit(onSubmit)}>
         <Input
           type="text"
-          placeholder="Логин"
-          {...register('login', {
+          placeholder="Email"
+          {...register('email', {
             onChange: () => setServerError(null),
           })}
         />

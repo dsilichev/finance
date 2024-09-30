@@ -1,10 +1,10 @@
 import { Routes, Route } from 'react-router-dom';
 import { Footer, Header } from './components';
-import { History, Main } from './pages';
+import { Authorization, History, Main, Registration } from './pages';
 import styled from 'styled-components';
-// import { useLayoutEffect } from 'react';
-// import { useDispatch } from 'react-redux';
-// import { setUser } from './actions';
+import { useLayoutEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { setUser } from './actions';
 // import { Modal } from './components';
 // import { ERROR } from './constants';
 
@@ -24,23 +24,23 @@ const Page = styled.div`
 `;
 
 export const Finance = () => {
-  // const dispatch = useDispatch();
-  // useLayoutEffect(() => {
-  //   const currentUserDataJSON = sessionStorage.getItem('userData');
+  const dispatch = useDispatch();
+  useLayoutEffect(() => {
+    const currentUserDataJSON = sessionStorage.getItem('userData');
 
-  //   if (!currentUserDataJSON) {
-  //     return;
-  //   }
+    if (!currentUserDataJSON) {
+      return;
+    }
 
-  //   const currentUserData = JSON.parse(currentUserDataJSON);
+    const currentUserData = JSON.parse(currentUserDataJSON);
 
-  //   dispatch(
-  //     setUser({
-  //       ...currentUserData,
-  //       roleId: Number(currentUserData.roleId),
-  //     }),
-  //   );
-  // }, [dispatch]);
+    dispatch(
+      setUser({
+        ...currentUserData,
+        roleId: Number(currentUserData.roleId),
+      }),
+    );
+  }, [dispatch]);
 
   return (
     <>
@@ -50,6 +50,8 @@ export const Finance = () => {
           <Routes>
             <Route path="/" element={<Main />} />
             <Route path="/history" element={<History />} />
+            <Route path="/login" element={<Authorization />} />
+            <Route path="/register" element={<Registration />} />
             {/* <Route path="/login" element={<Authorization />} />
             <Route path="/register" element={<Registration />} />
             <Route path="/users" element={<Users />} />

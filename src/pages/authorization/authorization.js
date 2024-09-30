@@ -7,8 +7,8 @@ import styled from 'styled-components';
 import { AuthFormError, Input, Button, H2 } from '../../components';
 import { setUser } from '../../actions';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectUserRole } from '../../selectors';
-import { ROLE } from '../../constants';
+// import { selectUserRole } from '../../selectors';
+// import { ROLE } from '../../constants';
 import { useResetForm } from '../../hooks';
 import { request } from '../../utils';
 
@@ -51,7 +51,7 @@ export const AuthorizationContainer = ({ className }) => {
 
   const dispatch = useDispatch();
 
-  const roleId = useSelector(selectUserRole);
+  // const roleId = useSelector(selectUserRole);
 
   useResetForm(reset);
 
@@ -70,9 +70,9 @@ export const AuthorizationContainer = ({ className }) => {
   const formError = errors?.login?.message || errors?.password?.message;
   const errorMessage = formError || serverError;
 
-  if (roleId !== ROLE.GUEST) {
-    return <Navigate to="/" />;
-  }
+  // if (roleId !== ROLE.GUEST) {
+  //   return <Navigate to="/" />;
+  // }
 
   return (
     <div className={className}>
