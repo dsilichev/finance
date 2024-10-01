@@ -14,7 +14,7 @@ const TransactionSchema = mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "Account",
     },
-    isIncrease: {
+    isIncome: {
       type: Boolean,
       required: true,
     }

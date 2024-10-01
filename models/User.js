@@ -3,6 +3,10 @@ const validator = require("validator");
 
 const UserSchema = mongoose.Schema(
   {
+    name: {
+      type: String,
+      required: true,
+    },
     email: {
       type: String,
       required: true,
@@ -24,6 +28,12 @@ const UserSchema = mongoose.Schema(
       {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Account",
+      },
+    ],
+    categories: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Category",
       },
     ],
   },
