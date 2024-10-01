@@ -1,11 +1,10 @@
 import { ACTION_TYPE } from '../actions';
-import { ROLE } from '../constants';
 
 const initialUserState = {
   id: null,
-  login: null,
-  roleId: ROLE.GUEST,
-  session: null,
+  name: null,
+  email: null,
+  accounts: [],
 };
 
 export const userReducer = (state = initialUserState, action) => {

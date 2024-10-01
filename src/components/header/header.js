@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { ControlPanel } from './components/control-panel/control-panel';
 
 const HeaderContainer = ({ className }) => {
   return (
@@ -8,10 +9,7 @@ const HeaderContainer = ({ className }) => {
         <Link to="/">Главная</Link>
         <Link to="/history">История</Link>
       </div>
-      <div className="user-link-wrap">
-        <Link to="/login">Войти</Link>
-        <i class="fas fa-user-circle"></i>
-      </div>
+      <ControlPanel />
     </div>
   );
 };

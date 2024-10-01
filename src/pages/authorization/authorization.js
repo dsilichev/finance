@@ -2,7 +2,7 @@ import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useState } from 'react';
-import { Link, Navigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { AuthFormError, Input, Button, H2 } from '../../components';
 import { setUser } from '../../actions';
@@ -13,12 +13,7 @@ import { useResetForm } from '../../hooks';
 import { request } from '../../utils';
 
 const authFormSchema = yup.object().shape({
-  login: yup
-    .string()
-    .required('Заполните логин')
-    .matches(/^\w+$/, 'Неверно заполнен логин')
-    .min(3, 'Неверно заполнен логин. Минимум 3 символа')
-    .max(15, 'Неверно заполнен логин. Максимум 15 симвовлов'),
+  email: yup.string().required('Заполните Email').email('Неверно заполнен Email'),
   password: yup
     .string()
     .required('Заполните пароль')
@@ -41,7 +36,7 @@ export const AuthorizationContainer = ({ className }) => {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      login: '',
+      email: '',
       password: '',
     },
     resolver: yupResolver(authFormSchema),
@@ -50,13 +45,13 @@ export const AuthorizationContainer = ({ className }) => {
   const [serverError, setServerError] = useState(null);
 
   const dispatch = useDispatch();
-
+  const navigate = useNavigate();
   // const roleId = useSelector(selectUserRole);
 
   useResetForm(reset);
 
-  const onSubmit = ({ login, password }) => {
-    request('/api/login', 'POST', { login, password }).then(({ error, user }) => {
+  const onSubmit = ({ email, password }) => {
+    request('/api/login', 'POST', { email, password }).then(({ error, user }) => {
       if (error) {
         setServerError(`Ошибка запроса: ${error}`);
         return;
@@ -64,10 +59,11 @@ export const AuthorizationContainer = ({ className }) => {
 
       dispatch(setUser(user));
       sessionStorage.setItem('userData', JSON.stringify(user));
+      navigate('/');
     });
   };
 
-  const formError = errors?.login?.message || errors?.password?.message;
+  const formError = errors?.email?.message || errors?.password?.message;
   const errorMessage = formError || serverError;
 
   // if (roleId !== ROLE.GUEST) {
@@ -80,8 +76,8 @@ export const AuthorizationContainer = ({ className }) => {
       <form onSubmit={handleSubmit(onSubmit)}>
         <Input
           type="text"
-          placeholder="Логин"
-          {...register('login', {
+          placeholder="Email"
+          {...register('email', {
             onChange: () => setServerError(null),
           })}
         />

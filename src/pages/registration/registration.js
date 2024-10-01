@@ -13,6 +13,8 @@ import { useResetForm } from '../../hooks';
 import { request } from '../../utils';
 
 const regFormSchema = yup.object().shape({
+  name: yup
+  .string(),
   email: yup
     .string()
     .required('Заполните Email')
@@ -37,6 +39,7 @@ export const RegistrationContainer = ({ className }) => {
     formState: { errors },
   } = useForm({
     defaultValues: {
+      name: '',
       email: '',
       password: '',
       passcheck: '',
@@ -53,8 +56,8 @@ export const RegistrationContainer = ({ className }) => {
 
   useResetForm(reset);
 
-  const onSubmit = ({ email, password }) => {
-    request('http://localhost:3000/api/register', 'POST', { email, password }).then(({ error, user }) => {
+  const onSubmit = ({ name, email, password }) => {
+    request('http://localhost:3000/api/register', 'POST', { name, email, password }).then(({ error, user }) => {
       if (error) {
         setServerError(`Ошибка запроса: ${error}`);
         return;
@@ -67,7 +70,7 @@ export const RegistrationContainer = ({ className }) => {
   };
 
   const formError =
-    errors?.email?.message || errors?.password?.message || errors?.passcheck?.message;
+  errors?.name?.message || errors?.email?.message || errors?.password?.message || errors?.passcheck?.message;
   const errorMessage = formError || serverError;
 
   // if (roleId !== ROLE.GUEST) {
@@ -78,6 +81,13 @@ export const RegistrationContainer = ({ className }) => {
     <div className={className}>
       <H2>Регистрация</H2>
       <form onSubmit={handleSubmit(onSubmit)}>
+      <Input
+          type="text"
+          placeholder="Имя"
+          {...register('name', {
+            onChange: () => setServerError(null),
+          })}
+        />
         <Input
           type="text"
           placeholder="Email"
