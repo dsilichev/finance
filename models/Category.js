@@ -6,10 +6,6 @@ const CategorySchema = mongoose.Schema(
       type: String,
       required: true,
     },
-    balance: {
-      type: mongoose.Schema.Types.Decimal128,
-      default: 0,
-    },
     isIncome: {
       type: Boolean,
       required: true,

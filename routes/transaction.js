@@ -15,7 +15,9 @@ const router = express.Router({ mergeParams: true });
 
 router.get("/", authenticated, async (req, res) => {
   const { transactions, lastPage } = await getTransactions(
+    req.user.id,
     req.query.account,
+    req.query.category,
     req.query.limit,
     req.query.page
   );

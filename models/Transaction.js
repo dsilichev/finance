@@ -14,9 +14,17 @@ const TransactionSchema = mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "Account",
     },
+    category: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Category",
+    },
     isIncome: {
       type: Boolean,
       required: true,
+    },
+    date: {
+      type: Date,
+      default: Date.now
     }
   },
   { timestamps: true }

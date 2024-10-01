@@ -26,20 +26,40 @@ async function editTransaction(id, transaction) {
 }
 
 //get Transactions
-async function getTransactions(account, limit = 10, page = 1) {
-  console.log(account ? { account: account } : null);
+async function getTransactions(
+  userId,
+  accountId,
+  categoryId,
+  limit = 10,
+  page = 1
+) {
+  console.log(accountId ? { account: accountId } : null);
   const [transactions, count] = await Promise.all([
-    Transaction.find(account ? { account: account } : null)
+    Transaction.find(
+      accountId ? { account: accountId } : { owner: userId },
+      categoryId
+        ? {
+            category: categoryId,
+          }
+        : null
+    )
       .limit(limit)
       .skip((page - 1) * limit)
       .sort({ createdAt: -1 }),
-      Transaction.countDocuments(account ? { account: account } : null),
+    Transaction.countDocuments(
+      accountId ? { account: accountId } : { owner: userId },
+      categoryId
+        ? {
+            category: categoryId,
+          }
+        : null
+    ),
   ]);
 
   return {
     transactions,
     lastPage: Math.ceil(count / limit),
-  }
+  };
 }
 
 module.exports = {

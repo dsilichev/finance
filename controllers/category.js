@@ -39,9 +39,9 @@ async function getExpensesCategories(userId) {
 }
 
 module.exports = {
-  addAccount,
-  deleteAccount,
-  editAccount,
+  addCategory,
+  deleteCategory,
+  editCategory,
   getIncomeCategories,
   getExpensesCategories,
 };
