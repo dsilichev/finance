@@ -33,8 +33,4 @@ export const Header = styled(HeaderContainer)`
     align-items: center;
     gap: 10px;
   }
-
-  & i {
-    font-size: 48px;
-  }
 `;
