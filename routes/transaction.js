@@ -30,7 +30,8 @@ router.post("/", authenticated, async (req, res) => {
     owner: req.user.id,
     amount: req.body.amount,
     account: req.body.accountId,
-    isIncrease: req.body.isIncrease,
+    category: req.body.categoryId,
+    isIncome: req.body.isIncome,
   });
 
   res.send({ data: newTransaction });
