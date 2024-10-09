@@ -1,8 +1,14 @@
 const express = require("express");
 const { register, login } = require("../controllers/user");
+const authenticated = require("../middlewares/authenticated");
 const mapUser = require("../helpers/mapUser");
 
 const router = express.Router({ mergeParams: true });
+
+router.get('/', authenticated, async (req, res) => {
+  const user = req.user;
+  res.send({ data: { user: mapUser(user) } });
+})
 
 router.post("/register", async (req, res) => {
   try {

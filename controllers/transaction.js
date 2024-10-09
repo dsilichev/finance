@@ -33,7 +33,7 @@ async function getTransactions(
   limit = 10,
   page = 1
 ) {
-  console.log(accountId ? { account: accountId } : null);
+  console.log(userId);
   const [transactions, count] = await Promise.all([
     Transaction.find(
       accountId ? { account: accountId } : { owner: userId },
