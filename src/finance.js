@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { useLayoutEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { setUser } from './actions';
+import { request } from './utils';
 // import { Modal } from './components';
 // import { ERROR } from './constants';
 
@@ -27,17 +28,28 @@ export const Finance = () => {
   const dispatch = useDispatch();
   useLayoutEffect(() => {
     const currentUserDataJSON = sessionStorage.getItem('userData');
-
+    let currentUserData = null;
+    
+    
+    
     if (!currentUserDataJSON) {
+      request('/api').then(({data: {user}}) => {
+        currentUserData = user;
+        console.log("1");
+      })
+    } else if (!currentUserData && !currentUserDataJSON) {
+      console.log("2");
       return;
+    } else {
+      currentUserData = JSON.parse(currentUserDataJSON);
+      console.log("3");
     }
 
-    const currentUserData = JSON.parse(currentUserDataJSON);
-
+    
+    console.log(currentUserData);
     dispatch(
       setUser({
         ...currentUserData,
-        roleId: Number(currentUserData.roleId),
       }),
     );
   }, [dispatch]);
