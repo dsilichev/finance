@@ -6,8 +6,12 @@ const mapUser = require("../helpers/mapUser");
 const router = express.Router({ mergeParams: true });
 
 router.get('/', authenticated, async (req, res) => {
-  const user = req.user;
-  res.send({ data: { user: mapUser(user) } });
+  try {
+    res.send({ data: { user: mapUser(req.user) } });
+  } catch (e) {
+    res.send({ error: e.message || "Not authenticated" });
+  }
+  
 })
 
 router.post("/register", async (req, res) => {
