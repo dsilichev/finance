@@ -4,7 +4,7 @@ import { Authorization, History, Main, Registration } from './pages';
 import styled from 'styled-components';
 import { useLayoutEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { setUser } from './actions';
+import { setUser, setUserAsync } from './actions';
 import { request } from './utils';
 // import { Modal } from './components';
 // import { ERROR } from './constants';
@@ -33,25 +33,29 @@ export const Finance = () => {
     
     
     if (!currentUserDataJSON) {
-      request('/api').then(({data: {user}}) => {
-        currentUserData = user;
-        console.log("1");
-      })
+      dispatch(setUserAsync()).then((userData) => {
+        console.log('error', userData.error);
+      });
+      // request('/api').then((res) => {
+      //   currentUserData = res.data.user;
+      //   console.log(res.data.user);
+      // })
     } else if (!currentUserData && !currentUserDataJSON) {
       console.log("2");
       return;
     } else {
       currentUserData = JSON.parse(currentUserDataJSON);
+      dispatch(
+        setUser({
+          ...currentUserData,
+        }),
+      );
       console.log("3");
     }
 
     
     console.log(currentUserData);
-    dispatch(
-      setUser({
-        ...currentUserData,
-      }),
-    );
+    
   }, [dispatch]);
 
   return (

@@ -8,7 +8,7 @@ import { logout } from '../../../../actions';
 const ControlPanelContainer = ({ className }) => {
   const dispatch = useDispatch();
   const name = useSelector(selectUserName);
-
+  console.log('name', name);
   //
   // login logout pic
   return (

@@ -19,7 +19,7 @@ const HistoryContainer = ({className}) => {
     });
   }, [account, category, page])
 
-  console.log(transactions)
+  //console.log(transactions)
 
   return (
     <div className={className}>{lastPage}</div>
