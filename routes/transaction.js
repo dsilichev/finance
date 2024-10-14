@@ -14,15 +14,19 @@ const router = express.Router({ mergeParams: true });
 //router.get("/:id", async (req, res) => {});
 
 router.get("/", authenticated, async (req, res) => {
-  const { transactions, lastPage } = await getTransactions(
-    req.user.id,
-    req.query.account,
-    req.query.category,
-    req.query.limit,
-    req.query.page
-  );
-
-  res.send({ data: { lastPage, transactions } });
+  try {
+    const { transactions, lastPage } = await getTransactions(
+      req.user.id,
+      req.query.account,
+      req.query.category,
+      req.query.limit,
+      req.query.page
+    );
+  
+    res.send({ data: { lastPage, transactions } });
+  } catch (e) {
+    res.send({ error: e.message || "Not authenticated" });
+  }
 });
 
 router.post("/", authenticated, async (req, res) => {
