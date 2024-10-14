@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { useLayoutEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { setUser, setUserAsync } from './actions';
+import { useNavigate } from 'react-router-dom';
 import { request } from './utils';
 // import { Modal } from './components';
 // import { ERROR } from './constants';
@@ -26,6 +27,8 @@ const Page = styled.div`
 
 export const Finance = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   useLayoutEffect(() => {
     const currentUserDataJSON = sessionStorage.getItem('userData');
     let currentUserData = null;
@@ -35,6 +38,9 @@ export const Finance = () => {
     if (!currentUserDataJSON) {
       dispatch(setUserAsync()).then((userData) => {
         console.log('error', userData.error);
+        if (userData.error) {
+          navigate('/login');
+        }
       });
       // request('/api').then((res) => {
       //   currentUserData = res.data.user;
@@ -42,6 +48,7 @@ export const Finance = () => {
       // })
     } else if (!currentUserData && !currentUserDataJSON) {
       console.log("2");
+      navigate('/login');
       return;
     } else {
       currentUserData = JSON.parse(currentUserDataJSON);
@@ -56,7 +63,7 @@ export const Finance = () => {
     
     console.log(currentUserData);
     
-  }, [dispatch]);
+  }, [dispatch, navigate]);
 
   return (
     <>
