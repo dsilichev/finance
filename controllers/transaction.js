@@ -5,7 +5,8 @@ const User = require("../models/User");
 
 async function addTransaction(transaction) {
   const newTransaction = await Transaction.create(transaction);
-
+  await newTransaction.populate("category");
+  await newTransaction.populate("account");
   return newTransaction;
 }
 
