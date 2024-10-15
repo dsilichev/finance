@@ -57,7 +57,7 @@ export const RegistrationContainer = ({ className }) => {
   useResetForm(reset);
 
   const onSubmit = ({ name, email, password }) => {
-    request('http://localhost:3000/api/register', 'POST', { name, email, password }).then(({ error, user }) => {
+    request('/api/register', 'POST', { name, email, password }).then(({ error, user }) => {
       if (error) {
         setServerError(`Ошибка запроса: ${error}`);
         return;
