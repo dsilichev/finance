@@ -46,7 +46,9 @@ async function getTransactions(
     )
       .limit(limit)
       .skip((page - 1) * limit)
-      .sort({ createdAt: -1 }),
+      .sort({ createdAt: -1 })
+      .populate('account')
+      .populate('category'),
     Transaction.countDocuments(
       accountId ? { account: accountId } : { owner: userId },
       categoryId
