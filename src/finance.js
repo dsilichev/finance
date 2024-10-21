@@ -22,7 +22,7 @@ const AppColumn = styled.div`
 `;
 
 const Page = styled.div`
-  padding: 120px 0 40px;
+  padding: 0 40px;
 `;
 
 export const Finance = () => {

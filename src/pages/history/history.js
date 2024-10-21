@@ -4,6 +4,8 @@ import { request } from '../../utils';
 import { PAGINATION_LIMIT } from '../../constants';
 import { useSelector } from 'react-redux';
 import { selectUserName } from '../../selectors';
+import { FilterPanel } from './components';
+import { Transactions } from './components/transactions';
 
 const HistoryContainer = ({ className }) => {
   const [transactions, setTransactions] = useState([]);
@@ -24,17 +26,18 @@ const HistoryContainer = ({ className }) => {
         setLastPage(lastPage);
       });
     }
-  }, [account, category, page]);
+  }, [account, category, page, userName]);
 
   console.log(transactions);
 
   return (
     <div className={className}>
-      {transactions.map((transaction) => (
-        <div>{transaction.account}</div>
-      ))}
+      <FilterPanel/>
+      <Transactions transactions={transactions}/>
     </div>
   );
 };
 
-export const History = styled(HistoryContainer)``;
+export const History = styled(HistoryContainer)`
+  
+`;
